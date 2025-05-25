@@ -77,7 +77,7 @@ const createGallery = images.map(({preview, original, description}) => {
       alt="${description}"
     />
   </a>
-</li>`
+</li>`;
 }).join("");
 gallery.innerHTML=createGallery;
 
@@ -88,7 +88,27 @@ function handleClick(event) {
     if (clickImg.nodeName !=="IMG") return;
     
     const bigImg = clickImg.dataset.source;
-    console.log(bigImg)
+    const altText = clickImg.alt;
+    console.log(bigImg);
+
+    
+
+    // import * as basicLightbox from 'basiclightbox'
+
+    const instance = basicLightbox.create(`
+    <img src="${bigImg}" alt="${altText}">
+   `)
+
+
+instance.show();
+
+document.addEventListener("keydown", function onEsc(evt) {
+  if (evt.key === "Escape") {
+    instance.close();
+    document.removeEventListener("keydown", onEsc);
+  }
+});
+
 }
 
 
